@@ -1,0 +1,21 @@
+<h1>New League</h1>
+
+
+	<%= form_with scope: :league, url: leagues_path, local: true do |form| %>
+
+	  	<p>
+	  		Name your league: <br>
+	  		<%= form.text_field :name %><br>
+	  	</p>
+
+	 	<p>
+	 		Number of players in league: <br>
+	 		<%= form.select(:limit) do %>
+	 			<%= options_for_select(@size_options) %>
+	 		<% end %>
+		</p>
+	 
+	  	<p>
+	    	<%= form.submit %>
+	  	</p>
+	<% end %>
