@@ -1,10 +1,28 @@
 class LeaguesController < ApplicationController
+	def index
+    	@leagues = League.all
+
+	end
+
+	def show
+    	@league = League.find(params[:id])
+  	end
+
 	def new
-		size_options = Array(2 .. 50)
-		@size_options = size_options.unshift("unlimited")
 	end
 
 	def create
-		render plain: params[:league].inspect
+		@league = League.new(league_params)
+
+		if @league.save
+  			redirect_to @league
+  		else
+  			render 'new'
+  		end
 	end
+
+	private
+	  	def league_params
+	    	params.require(:league).permit(:name, :limit)
+	  	end
 end

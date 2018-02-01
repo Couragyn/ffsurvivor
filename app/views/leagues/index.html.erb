@@ -1,0 +1,17 @@
+<h1>All Leagues</h1>
+ 
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Limit</th>
+  </tr>
+ 
+  <% @leagues.each do |league| %>
+    <tr>
+      <td><%= league.name %></td>
+      <td><%= league.limit %></td>
+      <td><%= link_to 'Show', league_path(league) %></td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'New League', new_league_path %>

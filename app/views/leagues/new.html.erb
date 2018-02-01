@@ -11,7 +11,9 @@
 	 	<p>
 	 		Number of players in league: <br>
 	 		<%= form.select(:limit) do %>
-	 			<%= options_for_select(@size_options) %>
+	 			<% size_options = Array(2 .. 50) %>
+				<% @size_options = size_options.unshift("unlimited") %>
+	 			<%= options_for_select(size_options) %>
 	 		<% end %>
 		</p>
 	 
@@ -19,3 +21,4 @@
 	    	<%= form.submit %>
 	  	</p>
 	<% end %>
+<%= link_to 'Back', leagues_path %>
