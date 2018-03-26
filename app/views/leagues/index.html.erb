@@ -1,17 +1,124 @@
-<h1>All Leagues</h1>
- 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Limit</th>
-  </tr>
- 
-  <% @leagues.each do |league| %>
-    <tr>
-      <td><%= league.name %></td>
-      <td><%= league.limit %></td>
-      <td><%= link_to 'Show', league_path(league) %></td>
-    </tr>
-  <% end %>
-</table>
-<%= link_to 'New League', new_league_path %>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#yourLeagues">Your Leagues</a></li>
+  <li><a data-toggle="tab" href="#allLeagues">All Leagues</a></li>
+  <li><a data-toggle="tab" href="#newLeage">New League</a></li>
+</ul>
+
+<div class="tab-content table-bordered">
+  <div id="yourLeagues" class="tab-pane fade in active">
+    <div class="container-fluid">
+      <h3>Your Leagues</h3>
+      <table class="display table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>League</th>
+            <th>Team</th>
+            <th>Position</th>
+            <th>League Size</th>
+          </tr>
+        </thead>
+       
+        <% @user_leagues.each do |league| %>
+          <tr>
+            <td><%= link_to league.league_name, league_path(league) %></td>
+            <td><%= link_to league.team_name, league_path(league) %></td>
+            <td><%=  %> </td>
+            <td><%= league.teams_in_league %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <div id="allLeagues" class="tab-pane fade">
+    <div class="container-fluid">
+      <h3>All Leagues</h3>
+      <table id="allLeaguesDataTable" class="display table" data-source="<%= leagues_url(format: "json") %>">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Membership</th>
+            <th>League Type</th>
+            <th>League Size</th>
+            <th>League Space</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @leagues.each do |league| %>
+            <tr>
+              <td><%= link_to(league.name, league) %></td>
+              <% if league.is_private %>
+                <td class="text-warning">Private</td>
+              <% else %>
+                <td class="text-success">Public</td>
+              <% end %>
+              <% if league.league_type == "ffa" %>
+                <td>Free For All</td>
+              <% elsif league.league_type == "h2h" %>
+                <td>Head to Head</td>
+              <% end %>
+              <% if league.limit > 0 %>
+                <td><%= league.limit %> teams</td>
+              <% else%>
+                <td>Unlimited</td>
+              <% end %>
+              <% if league.limit > 0 %>
+                <% if (league.teams_in_league / league.limit) < 1 %>
+                  <td class="text-success"><%= league.teams_in_league %> / <%= league.limit %></td>
+                <% else %>
+                  <td class="text-warning"><%= league.teams_in_league %> / <%= league.limit %></td>
+                <% end %>
+              <% else %>
+                <td class="text-success"><%= league.teams_in_league %> / <i>unlimited</i></td>
+              <% end %>
+              <% if league.is_payed %>
+                <td>Money League</td>
+              <% else %>
+                <td>Free</td>
+              <% end %>          
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="newLeage" class="tab-pane fade">
+    <div class="container-fluid">
+      <h3>New League</h3>
+      <%= bootstrap_form_with(url: leagues_path, model: @league, local: true) do |form| %>
+        <div class="form-group">
+          <%= form.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <label>League Type</label>
+          <%= form.radio_button :league_type, 'ffa', :checked => true, label: "Free for All" %> 
+          <%= form.radio_button :league_type, 'h2h', label: "Head to Head" %>
+        </div>
+
+        <div class="form-group">
+          <% size_options = Array(2 .. 50) %>
+          <% @size_options = size_options.unshift("unlimited") %>
+          <%= form.select :limit, size_options, label: "Number of Players" %> 
+        </div>
+
+        <div class="form-group">
+          <label>League Privacy</label>
+          <%= form.radio_button :is_private, '0', :checked => true, label: "Public" %> 
+          <%= form.radio_button :is_private, '1', label: "Private" %>
+          <small id="privacyHelpBlock" class="form-text text-muted">
+            Private leagues require a password to join
+          </small>
+        </div>
+
+        <div class="form-group">
+          <%= form.text_field :password, class: "form-control" %>
+        </div>
+     
+        <div class="form-group">
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

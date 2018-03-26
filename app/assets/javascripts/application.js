@@ -15,5 +15,14 @@
 //= require_tree .
 
 //= require jquery3
+//= require clipboard
+//= require bootstrap-sprockets
 //= require popper
-//= require bootstrap
+//= require dataTables/jquery.dataTables
+//= require jquery-ui
+
+
+$( document ).on('turbolinks:load', function() {
+  var clipboard = new Clipboard('.clipboard-btn');
+	$('#allLeaguesDataTable').DataTable();
+});

@@ -1,11 +1,29 @@
-<h1>Signup!</h1>
+<div class="container-fluid">
 
-<%= form_for :user, url: '/users' do |f| %>
+	<h1>Signup</h1>
 
-  	Username: <%= f.text_field :uname %>
-  	Email: <%= f.text_field :email %>
-  	Password: <%= f.password_field :password %>
-  	Password Confirmation: <%= f.password_field :password_confirmation %>
-  	<%= f.submit "Submit" %>
+	<%= bootstrap_form_for(:user, url: '/users') do |form| %>
 
-<% end %>
+		<div class="form-group">
+      <%= form.text_field :uname, class: "form-control", label: "User Name" %>
+  	</div>
+
+  	<div class="form-group">
+      <%= form.text_field :email, class: "form-control"%>
+  	</div>
+
+  	<div class="form-group">
+      <%= form.password_field :password, class: "form-control"%>
+  	</div>
+
+  	<div class="form-group">
+      <%= form.password_field :password_confirmation, class: "form-control"%>
+  	</div>
+
+  	<div class="form-group">
+      <%= form.submit "Submit" %>
+  	</div>
+
+	<% end %>
+	
+</div>

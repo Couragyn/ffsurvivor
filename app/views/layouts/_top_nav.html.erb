@@ -1,13 +1,13 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Survivor</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Leagues', controller: 'leagues' %></li>
-      <li><%= link_to 'New League', new_league_path %></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
+<div class="navbar navbar-static-top navbar-inverse">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Fantasy Football Survivor</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><%= link_to 'Leagues', controller: 'leagues' %></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
           <li class="navbar-text">
               Signed in as <%= current_user.uname %>
@@ -23,6 +23,7 @@
             <%= link_to 'Signup', '/signup' %>
           </li>
         <% end %>
-    </ul>
-  </div>
-</nav>
+      </ul>
+    </div>
+  </nav>
+</div>

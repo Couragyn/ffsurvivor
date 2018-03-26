@@ -4,7 +4,7 @@ class CreateWeeks < ActiveRecord::Migration[5.1]
     	t.integer :number
     	t.references :team, index: true, foreign_key: true
     	t.integer :lineup, array: true, default: []
-    	t.float :score
+    	t.float :score, default: 0
     end
   end
 end

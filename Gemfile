@@ -34,8 +34,18 @@ gem 'bcrypt', '~> 3.1.11'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'clipboard-rails'
+gem 'jquery-turbolinks'
+gem 'bootstrap-sass'
+gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'  
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-ui-rails'
+gem 'will_paginate'
+gem "bootstrap_form",
+    git: "https://github.com/bootstrap-ruby/bootstrap_form.git",
+    branch: "master"
+gem 'bootswatch-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

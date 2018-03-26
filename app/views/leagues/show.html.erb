@@ -1,9 +1,5 @@
-<p>
-  	<strong>Name:</strong>
-  	<%= @league.name %>
-</p>
- 
-<p>
-  	<strong>Limit:</strong>
-  	<%= @league.limit %>
-</p>
+<% if !@teams_in_league.map(&:user_id).include? session[:user_id] %>
+  <%= render 'league_info' %>
+<% elsif %>
+  <%= render 'member' %>
+<% end %>
