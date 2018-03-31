@@ -34,6 +34,10 @@ gem 'bcrypt', '~> 3.1.11'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'unicorn', '~> 5.4'
+gem 'redis-rails', '~> 5.0.1'
+gem 'sidekiq', '~> 5.1.2'
+
 gem 'jquery-rails'
 gem 'clipboard-rails'
 gem 'jquery-turbolinks'
