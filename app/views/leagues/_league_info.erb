@@ -30,21 +30,14 @@
 			    <th>Commissioner</th>
 			    <td><%= @commissioner.uname %></td>
 			  </tr>
+			  <% if @league.owner_id == session[:user_id] && @league.is_private == true %>
+			  	<tr>
+			  		<th>Password</th>
+			  		<td><%= @league.password %></td>
+			  	</tr>
+			  <% end %>
 	    </table>
 	  </div>
-	  <% if @league.owner_id == session[:user_id] %>
-			<h3 class="sub-header">Commissioner Info</h3>
-		  <div class="table-responsive">
-		    <table class="table table-striped">
-				  <% if @league.is_private == true %>
-					  <tr>
-					    <td>Password</td>
-					    <td><%= @league.password %></td>
-					  </tr>
-					<% end %>
-				</table>
-			</div>
-		<% end %>
 		<% if (!@teams_in_league.map(&:user_id).include? session[:user_id]) || (@league.owner_id == session[:user_id]) %>
 			<label for="copyJoin">Join League URL:</label>
 			<div>
