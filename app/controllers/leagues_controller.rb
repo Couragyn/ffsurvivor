@@ -14,7 +14,7 @@ class LeaguesController < ApplicationController
     	@league = League.find(params[:id])
     	session[:current_league] = params[:id]
     	@commissioner = User.find_by(id: @league.owner_id)
-    	@teams_in_league = Team.select("teams.*").where(:league_id => params[:id]).joins(:user).select("users.*, users.id as user_id").where("users.id = teams.user_id") 
+    	@teams_in_league = Team.select("teams.*, teams.id as team_id").where(:league_id => params[:id]).joins(:user).select("users.*, users.id as user_id").where("users.id = teams.user_id") 
   	end
 
 	def new

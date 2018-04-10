@@ -1,5 +1,5 @@
 class League < ApplicationRecord
-	has_many :teams
+	has_many :teams, dependent: :delete_all
 
 	validates :name, presence: true, uniqueness: { case_sensitive: false }
 	validates :limit, presence: true

@@ -58,7 +58,7 @@
         		<tr>
         			<td><%= team.name %></td>
         			<td><%= team.uname %></td>
-        			<td><%=  link_to("Delete", {:controller => :teams, :action => 'destroy', :id => team.id }, class: "btn btn-xs btn-danger", data: { confirm: "Are you sure?" }) %></td>
+        			<td><%=  link_to("Delete", '/teams/' + (team.team_id).to_s, method: :destroy, class: "btn btn-xs btn-danger", data: { confirm: "Are you sure?" }) %></td>
         		</tr>
         	<% end %>
         </tbody>
