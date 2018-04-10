@@ -16,24 +16,15 @@
           <% end %>
 			  </tr>
 			  <tr>
-			    <th>League Type</th>
-		      <% if @league.league_type == "ffa" %>
-            <td>Free For All</td>
-          <% elsif @league.league_type == "h2h" %>
-            <td>Head to Head</td>
-          <% end %>
-			  </tr>
-			  <tr>
-			    <th>Members </th>
-			    <td><%= @league.teams_in_league %> / <%= @league.limit %></td>
-			  </tr>
-			  <tr>
 			    <th>Membership</th>
 			    <% if @league.is_private == true %>
             <td>Private</td>
           <% else %>
             <td>Public</td>
           <% end %>
+			  </tr>			  <tr>
+			    <th>Members </th>
+			    <td><%= @league.teams_in_league %> / <%= @league.limit %></td>
 			  </tr>
 			  <tr>
 			    <th>Commissioner</th>
@@ -45,9 +36,6 @@
 			<h3 class="sub-header">Commissioner Info</h3>
 		  <div class="table-responsive">
 		    <table class="table table-striped">
-		    	<tr>
-		    		<td colspan="2">Settings link *cog*</t4></td>
-		    	</tr>
 				  <% if @league.is_private == true %>
 					  <tr>
 					    <td>Password</td>
@@ -57,7 +45,6 @@
 				</table>
 			</div>
 		<% end %>
-
 		<% if (!@teams_in_league.map(&:user_id).include? session[:user_id]) || (@league.owner_id == session[:user_id]) %>
 			<label for="copyJoin">Join League URL:</label>
 			<div>
@@ -69,8 +56,6 @@
 			  Copy Link to Clipboard
 			</button>
 		<% end %>
-
-
 	</div>
 	<div class="col-xs-6">
 	  <h3 class="sub-header">Members</h3>

@@ -29,3 +29,7 @@
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-header > a:hover, {
   color: #FF851B;
 }
+
+table.display tbody td {
+    border-top: 1px solid #ddd;
+}

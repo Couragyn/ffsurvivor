@@ -24,5 +24,14 @@
 
 $( document ).on('turbolinks:load', function() {
   var clipboard = new Clipboard('.clipboard-btn');
+
 	$('#allLeaguesDataTable').DataTable();
+
+	$('#isPrivate div input').change(function(){
+	  if($(this).val() == '1'){ //'.val()'
+	    $('#password').show();
+	  } else {
+	  	$('#password').hide();
+	  }
+	});
 });

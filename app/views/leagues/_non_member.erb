@@ -1,0 +1,21 @@
+<% if @league.owner_id == session[:user_id] %>
+	<ul class="nav nav-tabs">
+	  <li class="active"><a data-toggle="tab" href="#leagueInfo">League Info</a></li>
+	  <% if @league.owner_id == session[:user_id] %>
+		  <li><a data-toggle="tab" href="#leagueSettings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> League Settings</a></li>
+		<% end %>
+	</ul>
+
+	<div class="tab-content">
+	  <div id="leagueInfo" class="tab-pane fade in active">
+	    <%= render 'league_info' %>
+	  </div>
+	  <div id="leagueSettings" class="tab-pane fade">
+	  	<% if @league.owner_id == session[:user_id] %>
+	  		<%= render 'league_settings' %>
+	  	<% end %>
+		</div>
+	</div>
+<% else %>
+	<%= render 'league_info' %>
+<% end %>

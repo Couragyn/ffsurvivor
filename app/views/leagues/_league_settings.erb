@@ -1,0 +1,68 @@
+<div class="container-fluid">
+	<div class="col-xs-6">
+	  <h3 class="sub-header">Edit League Info</h3>
+	  <div class="table-responsive">
+	  	<%= bootstrap_form_with(model: @league, :method => :PUT, local: true) do |form| %>
+		    <table class="table table-striped">
+				  <tr>
+				    <td><%= form.text_field :name, class: "form-control" %></td>
+				  </tr>	  
+				  <tr>
+				  	<td>
+					  	<% size_options = Array(2 .. 50).select{|x| x%5==0} %>
+					    <%= form.select :limit, options_for_select(size_options, @league.limit), label: "Player Limit" %>
+					  </td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		<label>League Privacy</label>
+					    <% if @league.is_private == true %>
+		           	<%= form.radio_button :is_private, '0', label: "Public" %> 
+		          	<%= form.radio_button :is_private, '1', :checked => true, label: "Private" %>
+		          <% else %>
+		            <%= form.radio_button :is_private, '0', :checked => true, label: "Public" %> 
+		          	<%= form.radio_button :is_private, '1', label: "Private" %>
+		          <% end %>
+		        </td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  		<%= form.text_field :password, class: "form-control" %>
+				  		<small id="privacyHelpBlock" class="form-text text-muted">
+	            	Passwords will only apply to Private Leagues
+	          	</small>
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<td>
+					  	<%= form.submit %>
+					  </td>
+				  </tr>		
+		    </table>
+		  <% end %>
+		</div>
+	</div>
+	<div class="col-xs-6">
+	  <h3 class="sub-header">Remove Members</h3>
+	  <div class="table-responsive">
+	    <table class="table table-striped">
+	    	<thead>
+          <tr>
+            <th>Team Name</th>
+            <th>User Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        	<% @teams_in_league.each do |team| %>
+        		<tr>
+        			<td><%= team.name %></td>
+        			<td><%= team.uname %></td>
+        			<td><%=  link_to("Delete", {:controller => :teams, :action => 'destroy', :id => team.id }, class: "btn btn-xs btn-danger", data: { confirm: "Are you sure?" }) %></td>
+        		</tr>
+        	<% end %>
+        </tbody>
+	    </table>
+	  </div>
+	</div>
+</div>

@@ -6,6 +6,11 @@
       </div>
       <ul class="nav navbar-nav">
         <li><%= link_to 'Leagues', controller: 'leagues' %></li>
+        <% if current_league %>
+          <li>
+            <%= link_to current_league.name, league_path(current_league) %>
+          </li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>

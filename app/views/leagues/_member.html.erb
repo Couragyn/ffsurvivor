@@ -1,5 +1,8 @@
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#leagueInfo">League Info</a></li>
+  <% if @league.owner_id == session[:user_id] %>
+	  <li><a data-toggle="tab" href="#leagueSettings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> League Settings</a></li>
+	<% end %>
   <li><a data-toggle="tab" href="#standings">Standings</a></li>
   <li><a data-toggle="tab" href="#weekly">Weekly</a></li>
 </ul>
@@ -8,6 +11,11 @@
   <div id="leagueInfo" class="tab-pane fade in active">
     <%= render 'league_info' %>
   </div>
+  <div id="leagueSettings" class="tab-pane fade">
+  	<% if @league.owner_id == session[:user_id] %>
+  		<%= render 'league_settings' %>
+  	<% end %>
+	</div>
   <div id="standings" class="tab-pane fade">
   	<div class="container-fluid">
 	  	<h3>Standings</h3>
