@@ -11,11 +11,11 @@ class LeaguesController < ApplicationController
 	end
 
 	def show
-    	@league = League.find(params[:id])
-    	session[:current_league] = params[:id]
-    	@commissioner = User.find_by(id: @league.owner_id)
-    	@teams_in_league = Team.select("teams.*, teams.id as team_id").where(:league_id => params[:id]).joins(:user).select("users.*, users.id as user_id").where("users.id = teams.user_id") 
-  	end
+  	@league = League.find(params[:id])
+  	session[:current_league] = params[:id]
+  	@commissioner = User.find_by(id: @league.owner_id)
+  	@teams_in_league = Team.select("teams.*, teams.id as team_id").where(:league_id => params[:id]).joins(:user).select("users.*, users.id as user_id").where("users.id = teams.user_id") 
+	end
 
 	def new
 	end
@@ -71,7 +71,15 @@ class LeaguesController < ApplicationController
 		else
 			redirect_to root_path
 		end
+	end
 
+	def invite
+	  respond_to do |format|
+	    JoinMailer.join_email(params["email"], params["join_url"]).deliver
+
+	    format.html { redirect_to @user, notice: 'Invite was successfully sent.' }
+	    format.json { render :show, status: :created, location: @user }
+	  end
 	end
 
 end

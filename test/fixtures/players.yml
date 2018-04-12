@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  key: 1
+  name: MyString
+  team: MyString
+  position: MyString
+  adp: 1.5
+  adpppr: 1.5
+  bye: 1
+
+two:
+  key: 1
+  name: MyString
+  team: MyString
+  position: MyString
+  adp: 1.5
+  adpppr: 1.5
+  bye: 1

@@ -19,8 +19,9 @@
 //= require bootstrap-sprockets
 //= require popper
 //= require dataTables/jquery.dataTables
+//= require jquery_ujs
 //= require jquery-ui
-
+//= require rails_sortable
 
 $( document ).on('turbolinks:load', function() {
   var clipboard = new Clipboard('.clipboard-btn');
@@ -33,5 +34,9 @@ $( document ).on('turbolinks:load', function() {
 	  } else {
 	  	$('#password').hide();
 	  }
+	});
+
+	$(function() {
+	  $('.sortable').railsSortable();
 	});
 });

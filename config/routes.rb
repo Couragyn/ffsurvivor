@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :players
 	get 'welcome/index'
 
 	get '/signup' => 'users#new'
@@ -12,7 +13,9 @@ Rails.application.routes.draw do
 	get '/leagues/:id/join' => 'leagues#new_join'
 	post '/leagues/:id/join' => 'leagues#create_join', :as => 'join'
 
-  post 'teams/:team_id' => 'teams#destroy'
+  post '/teams/:team_id' => 'teams#destroy'
+
+  post '/players/repopulate' => 'players#populate_db'
 
 	root 'welcome#index'
 end
