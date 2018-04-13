@@ -3,7 +3,6 @@ class PlayersController < ApplicationController
 
   def populate_db
     # require 'net/http'
-    require 'csv'
 
     # Qb.delete_all
     # Rb.delete_all
@@ -11,15 +10,6 @@ class PlayersController < ApplicationController
     # Te.delete_all
     # K.delete_all
     # Def.delete_all
-
-    playerHash = {}
-
-
-
-    CSV.foreach('db/import_files/statheads_players.csv', :headers => true) do |row|
-      playerHash[row['full_name']] = row['player_id']
-      puts playerHash[row['full_name']]
-    end
 
     # uri = URI('https://api.fantasydata.net/v3/nfl/stats/JSON/FantasyPlayers')
 
@@ -73,6 +63,11 @@ class PlayersController < ApplicationController
     #     end
     #   end      
     # end
+
+    sql = "Select * from player where player_id = '00-0019596'"
+    records_array = ActiveRecord::Base.connection.execute(sql)
+    puts "1"
+    puts records_array[0]['full_name']
 
     redirect_to action: 'index'
   end
