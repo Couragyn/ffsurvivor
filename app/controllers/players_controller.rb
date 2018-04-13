@@ -2,67 +2,77 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
 
   def populate_db
-    require 'net/http'
+    # require 'net/http'
+    require 'csv'
 
-    Qb.delete_all
-    Rb.delete_all
-    Wr.delete_all
-    Te.delete_all
-    K.delete_all
-    Def.delete_all
+    # Qb.delete_all
+    # Rb.delete_all
+    # Wr.delete_all
+    # Te.delete_all
+    # K.delete_all
+    # Def.delete_all
 
-    uri = URI('https://api.fantasydata.net/v3/nfl/stats/JSON/FantasyPlayers')
+    playerHash = {}
 
-    request = Net::HTTP::Get.new(uri.request_uri)
-    # Request headers
-    request['Ocp-Apim-Subscription-Key'] = ENV['FANTASY_DATA_KEY']
-    # Request body
-    request.body = "{body}"
 
-    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-        http.request(request)
+
+    CSV.foreach('db/import_files/statheads_players.csv', :headers => true) do |row|
+      playerHash[row['full_name']] = row['player_id']
+      puts playerHash[row['full_name']]
     end
-    playerList = JSON.parse response.body
 
-    playerList.each do |player|
-      if player["Position"] === 'QB'
-        @player = Qb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      elsif player["Position"] === 'RB'
-        @player = Rb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      elsif player["Position"] === 'WR'
-        @player = Wr.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      elsif player["Position"] === 'TE'
-        @player = Te.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      elsif player["Position"] === 'K'
-        @player = K.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      elsif player["Position"] === 'DEF'
-        @player = Def.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-        if @player.save
-        else
-          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-        end
-      end      
-    end
+    # uri = URI('https://api.fantasydata.net/v3/nfl/stats/JSON/FantasyPlayers')
+
+    # request = Net::HTTP::Get.new(uri.request_uri)
+    # # Request headers
+    # request['Ocp-Apim-Subscription-Key'] = ENV['FANTASY_DATA_KEY']
+    # # Request body
+    # request.body = "{body}"
+
+    # response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+    #     http.request(request)
+    # end
+    # playerList = JSON.parse response.body
+
+    # playerList.each do |player|
+    #   if player["Position"] === 'QB'
+    #     @player = Qb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   elsif player["Position"] === 'RB'
+    #     @player = Rb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   elsif player["Position"] === 'WR'
+    #     @player = Wr.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   elsif player["Position"] === 'TE'
+    #     @player = Te.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   elsif player["Position"] === 'K'
+    #     @player = K.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   elsif player["Position"] === 'DEF'
+    #     @player = Def.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
+    #     if @player.save
+    #     else
+    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+    #     end
+    #   end      
+    # end
 
     redirect_to action: 'index'
   end
