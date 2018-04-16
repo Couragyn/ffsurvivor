@@ -2,72 +2,76 @@ class PlayersController < ApplicationController
   before_action :set_player, only: [:show, :edit, :update, :destroy]
 
   def populate_db
-    # require 'net/http'
+    Qb.delete_all
+    Rb.delete_all
+    Wr.delete_all
+    Te.delete_all
+    K.delete_all
+    Def.delete_all
 
-    # Qb.delete_all
-    # Rb.delete_all
-    # Wr.delete_all
-    # Te.delete_all
-    # K.delete_all
-    # Def.delete_all
+    qb_sql = "Select * from player where position = 'QB';"
+    qb_array = ActiveRecord::Base.connection.execute(qb_sql)
+    qb_array.each do |player|
+      @player = Qb.new(key: player["player_id"], name: player["full_name"], team: player["team"])
+      if @player.save
+      else
+        puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+      end
+    end
 
-    # uri = URI('https://api.fantasydata.net/v3/nfl/stats/JSON/FantasyPlayers')
+    rb_sql = "Select * from player where position = 'RB';"
+    rb_array = ActiveRecord::Base.connection.execute(rb_sql)
+    rb_array.each do |player|
+      @player = Rb.new(key: player["player_id"], name: player["full_name"], team: player["team"])
+      if @player.save
+      else
+        puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+      end
+    end
 
-    # request = Net::HTTP::Get.new(uri.request_uri)
-    # # Request headers
-    # request['Ocp-Apim-Subscription-Key'] = ENV['FANTASY_DATA_KEY']
-    # # Request body
-    # request.body = "{body}"
+    wr_sql = "Select * from player where position = 'WR';"
+    wr_array = ActiveRecord::Base.connection.execute(wr_sql)
+    wr_array.each do |player|
+      @player = Wr.new(key: player["player_id"], name: player["full_name"], team: player["team"])
+      if @player.save
+      else
+        puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+      end
+    end
 
-    # response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-    #     http.request(request)
-    # end
-    # playerList = JSON.parse response.body
+    te_sql = "Select * from player where position = 'TE';"
+    te_array = ActiveRecord::Base.connection.execute(te_sql)
+    te_array.each do |player|
+      @player = Te.new(key: player["player_id"], name: player["full_name"], team: player["team"])
+      if @player.save
+      else
+        puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+      end
+    end
 
-    # playerList.each do |player|
-    #   if player["Position"] === 'QB'
-    #     @player = Qb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   elsif player["Position"] === 'RB'
-    #     @player = Rb.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   elsif player["Position"] === 'WR'
-    #     @player = Wr.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   elsif player["Position"] === 'TE'
-    #     @player = Te.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   elsif player["Position"] === 'K'
-    #     @player = K.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   elsif player["Position"] === 'DEF'
-    #     @player = Def.new(key: player["PlayerID"], name: player["Name"], team: player["Team"], position: player["Position"], adp: player["AverageDraftPosition"], adpppr: player["AverageDraftPositionPPR"], bye: player["ByeWeek"])
-    #     if @player.save
-    #     else
-    #       puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
-    #     end
-    #   end      
-    # end
+    k_sql = "Select * from player where position = 'K';"
+    k_array = ActiveRecord::Base.connection.execute(k_sql)
+    k_array.each do |player|
+      @player = K.new(key: player["player_id"], name: player["full_name"], team: player["team"])
+      if @player.save
+      else
+        puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+      end
+    end
 
-    sql = "Select * from player where player_id = '00-0019596'"
-    records_array = ActiveRecord::Base.connection.execute(sql)
-    puts "1"
-    puts records_array[0]['full_name']
+    def_sql = "Select * from team;"
+    def_array = ActiveRecord::Base.connection.execute(def_sql)
+    def_array.each do |player|
+      if player["team_id"] === "JAC" || player["team_id"] === "SD" || player["team_id"] === "UNK"
+      else
+        @full_name = player["city"] + " " + player["name"]
+        @player = Def.new(key: player["player_id"], name: @full_name, team: player["team_id"])
+        if @player.save
+        else
+          puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
+        end
+      end
+    end
 
     redirect_to action: 'index'
   end
