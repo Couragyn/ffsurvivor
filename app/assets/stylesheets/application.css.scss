@@ -26,10 +26,18 @@
   box-shadow: 0 8px 6px -6px #999;
 }
 
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-header > a:hover, {
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-header > a:hover {
   color: #FF851B;
 }
 
+.weekNav > a:hover, .weekNav.open > a {
+	color:	#006400;
+}
+
 table.display tbody td {
-    border-top: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+
+.weekNav {
+	margin: 2px;
 }

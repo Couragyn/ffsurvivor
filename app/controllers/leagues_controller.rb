@@ -82,4 +82,20 @@ class LeaguesController < ApplicationController
 	  end
 	end
 
+	def weekly
+		@current_week = League.current_week
+		@this_week = params[:week_id]
+		@qb_players = Qb.order(:sort).all
+    @rb_players = Rb.order(:sort).all
+    @wr_players = Wr.order(:sort).all
+    @te_players = Te.order(:sort).all
+    @k_players = K.order(:sort).all
+    @d_players = Def.order(:sort).all
+		render 'weekly'
+	end
+
+	def create_weekly
+
+	end
+
 end

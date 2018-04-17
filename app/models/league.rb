@@ -7,4 +7,8 @@ class League < ApplicationRecord
 	def teams_in_league
 	  Team.where("league_id = ?", self.id).count
 	end
+
+	def self.current_week
+	  1
+	end
 end
