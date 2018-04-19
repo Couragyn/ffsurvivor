@@ -61,11 +61,11 @@ class PlayersController < ApplicationController
 
     def_sql = "Select * from team;"
     def_array = ActiveRecord::Base.connection.execute(def_sql)
-    def_array.each do |player|
-      if player["team_id"] === "JAC" || player["team_id"] === "SD" || player["team_id"] === "UNK"
+    def_array.each_with_index do |player, index|
+      if player["team_id"] === "JAC" || player["team_id"] === "SD" || player["team_id"] === "UNK" || player["team_id"] === "STL"
       else
         @full_name = player["city"] + " " + player["name"]
-        @player = Def.new(key: player["player_id"], name: @full_name, team: player["team_id"])
+        @player = Def.new(key: "d"+index.to_s, name: @full_name, team: player["team_id"])
         if @player.save
         else
           puts "Failed to add. name: "+player["Name"]+", id: "+player["FantasyPlayerKey"]
@@ -104,41 +104,16 @@ class PlayersController < ApplicationController
   # POST /players
   # POST /players.json
   def create
-    @player = Player.new(player_params)
-
-    respond_to do |format|
-      if @player.save
-        format.html { redirect_to @player, notice: 'Player was successfully created.' }
-        format.json { render :show, status: :created, location: @player }
-      else
-        format.html { render :new }
-        format.json { render json: @player.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /players/1
   # PATCH/PUT /players/1.json
   def update
-    respond_to do |format|
-      if @player.update(player_params)
-        format.html { redirect_to @player, notice: 'Player was successfully updated.' }
-        format.json { render :show, status: :ok, location: @player }
-      else
-        format.html { render :edit }
-        format.json { render json: @player.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /players/1
   # DELETE /players/1.json
   def destroy
-    @player.destroy
-    respond_to do |format|
-      format.html { redirect_to players_url, notice: 'Player was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
@@ -149,6 +124,6 @@ class PlayersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_params
-      params.require(:player).permit(:key, :name, :team, :position, :adp, :adpppr, :bye)
+      # params.require(:player).permit(:key, :name, :team, :position, :adp, :adpppr, :bye)
     end
 end

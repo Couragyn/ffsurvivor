@@ -37,8 +37,64 @@
 			<% end %>
 		</ul>
 	</div>
+	<form method="post">
+		<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+		<div class="container-fluid">
+			<h3>QB</h3>
+			<select class="player_select select100" name="qbs[]" multiple="multiple">
+				<% @qb_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>
+		</div>
 
-	<div class="container-fluid">
+		<div class="container-fluid">
+			<h3>RB</h3>
+			<select class="player_select select100" name="rbs[]" multiple="multiple">
+				<% @rb_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>
+		</div>
 
-	</div>
+		<div class="container-fluid">
+			<h3>WR</h3>
+			<select class="player_select select100" name="wrs[]" multiple="multiple">
+				<% @wr_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>  
+		</div>
+
+		<div class="container-fluid">
+			<h3>TE</h3>
+			<select class="player_select select100" name="tes[]" multiple="multiple">
+				<% @te_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>
+		</div>
+
+		<div class="container-fluid">
+			<h3>K</h3>
+			<select class="player_select select100" name="ks[]" multiple="multiple">
+				<% @k_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>
+		</div>
+
+		<div class="container-fluid">
+			<h3>Def</h3>
+			<select class="player_select select100" name="defs[]" multiple="multiple">
+				<% @d_players.each do |player| %>
+	        <option value="<%= player.key %>"><%= player.name %></option>
+	      <% end %>
+	    </select>  
+		</div>
+
+		<div class="container-fluid">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
 </div>

@@ -22,6 +22,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require rails_sortable
+//= require select2-full
 
 $( document ).on('turbolinks:load', function() {
   var clipboard = new Clipboard('.clipboard-btn');
@@ -38,5 +39,9 @@ $( document ).on('turbolinks:load', function() {
 
 	$(function() {
 	  $('.sortable').railsSortable();
+	});
+
+	$( ".player_select" ).select2({
+	  theme: "bootstrap"
 	});
 });

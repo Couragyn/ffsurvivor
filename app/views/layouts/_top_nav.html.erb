@@ -11,7 +11,7 @@
             <%= link_to current_league.name, league_path(current_league) %>
           </li>
           <li>
-            <%= link_to 'Weekly Lineup', league_path(current_league) + '/weekly/' + League.current_week.to_s %>
+            <%= link_to 'Weekly Lineup', league_path(current_league) + '/team/' + current_user.id.to_s + '/weekly/' + League.current_week.to_s %>
           </li>
         <% end %>
       </ul>

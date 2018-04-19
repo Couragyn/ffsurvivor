@@ -1,4 +1,4 @@
-class AddLeagueToLeagues < ActiveRecord::Migration[5.1]
+class AddLeagueToTeams < ActiveRecord::Migration[5.1]
   def change
     add_reference :teams, :league, foreign_key: true
   end

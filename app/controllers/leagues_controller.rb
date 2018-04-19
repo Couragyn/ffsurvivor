@@ -32,14 +32,11 @@ class LeaguesController < ApplicationController
 
 	def update
 		league_params = params["league"]
-		puts "blalba"
-		puts league_params
 		puts params["id"]
 	  @league = League.find(params["id"])
 	  @league.assign_attributes(name: league_params["name"], limit: league_params["limit"], is_private: league_params["is_private"], password: league_params["password"])
 
 	  if @league.changed?
-	  	puts 'chaaaaaaaaanged'
 	    if @league.save
 	      flash[:success] = true
 	      redirect_to @league
@@ -52,14 +49,14 @@ class LeaguesController < ApplicationController
 	end
 
 	def new_join
-		@league = League.find(params[:id])
+		@league = League.find(params[:league_id])
 		render 'new_join'
 	end
 
 	def create_join
 		@join_params = params[:join_league]
-		@league = League.find(params[:id])
-		@team = Team.new(name: @join_params["name"], user_id: session[:user_id], league_id: params[:id])
+		@league = League.find(params[:league_id])
+		@team = Team.new(name: @join_params["name"], user_id: session[:user_id], league_id: params[:league_id])
 
 		if ((@league.is_private && @league.password == @join_params["password"]) || !@league.is_private) 
 			if @team.save
@@ -94,7 +91,7 @@ class LeaguesController < ApplicationController
 		render 'weekly'
 	end
 
-	def create_weekly
+	def set_weekly
 
 	end
 

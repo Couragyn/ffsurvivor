@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :players
 	get 'welcome/index'
+
+  resources :players
 
 	get '/signup' => 'users#new'
 	post '/users' => 'users#create'
@@ -10,11 +11,16 @@ Rails.application.routes.draw do
 	get '/logout' => 'sessions#destroy'
 
 	resources :leagues
-	get '/leagues/:id/join' => 'leagues#new_join'
-	post '/leagues/:id/join' => 'leagues#create_join', :as => 'join'
 
-	get '/leagues/:id/weekly/:week_id' => 'leagues#weekly', as: :weekly
-	post '/leagues/:id/weekly' => 'leagues#create_weekly'
+	get '/leagues/:league_id/join' => 'leagues#new_join'
+	post '/leagues/:league_id/join' => 'leagues#create_join', :as => 'join'
+
+	get '/leagues/:league_id/team/:team_id' => 'leagues#team', as: :team
+	post '/leagues/:league_id/team/:team_id' => 'leagues#team', as: :post_team
+
+
+	get '/leagues/:league_id/team/:team_id/weekly/:week_id' => 'leagues#weekly', as: :weekly
+	post '/leagues/:league_id/team/:team_id/weekly/:week_id' => 'leagues#weekly', as: :set_weekly
 
   post '/teams/:team_id' => 'teams#destroy'
 
