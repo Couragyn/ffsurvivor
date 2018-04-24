@@ -40,8 +40,14 @@
 	<form method="post">
 		<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 		<div class="container-fluid">
-			<h3>QB</h3>
-			<select class="player_select select100" name="qbs[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>QB</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="qb_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="qb_select" name="qbs[]" multiple="multiple">
 				<% @qb_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
@@ -49,8 +55,14 @@
 		</div>
 
 		<div class="container-fluid">
-			<h3>RB</h3>
-			<select class="player_select select100" name="rbs[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>RB</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="rb_count">0</span>/2</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="rb_select" name="rbs[]" multiple="multiple">
 				<% @rb_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
@@ -58,8 +70,14 @@
 		</div>
 
 		<div class="container-fluid">
-			<h3>WR</h3>
-			<select class="player_select select100" name="wrs[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>WR</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="wr_count">0</span>/3</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="wr_select" name="wrs[]" multiple="multiple">
 				<% @wr_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
@@ -67,8 +85,14 @@
 		</div>
 
 		<div class="container-fluid">
-			<h3>TE</h3>
-			<select class="player_select select100" name="tes[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>TE</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="te_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="te_select" name="tes[]" multiple="multiple">
 				<% @te_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
@@ -76,8 +100,94 @@
 		</div>
 
 		<div class="container-fluid">
-			<h3>K</h3>
-			<select class="player_select select100" name="ks[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>Flex</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="flex1_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-1">
+					<div class="radio">
+					  <label><input type="radio" name="flex1" value="rb">RB</label>
+					</div>
+					<div class="radio">
+					  <label><input type="radio" name="flex1" value="wr">WR</label>
+					</div>
+					<div class="radio disabled">
+					  <label><input type="radio" name="flex1" value="te">TE</label>
+					</div>
+				</div>
+				<div class="col-xs-11">
+					<select class="selectFullWidth flex_select" id="flex1rb_select" name="flex1rb[]" multiple="multiple">
+						<% @rb_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select> 
+			    <select class="selectFullWidth flex_select" id="flex1wr_select" name="flex1wr[]" multiple="multiple">
+						<% @wr_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select>
+			    <select class="selectFullWidth flex_select" id="flex1te_select" name="flex1te[]" multiple="multiple">
+						<% @te_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select> 
+			  </div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+		  <div class="pull-left">
+			  <h3>Flex</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="flex2_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-1">
+					<div class="radio">
+					  <label><input type="radio" name="flex2" value="rb">RB</label>
+					</div>
+					<div class="radio">
+					  <label><input type="radio" name="flex2" value="wr">WR</label>
+					</div>
+					<div class="radio disabled">
+					  <label><input type="radio" name="flex2" value="te">TE</label>
+					</div>
+				</div>
+				<div class="col-xs-11">
+					<select class="selectFullWidth flex_select" id="flex2rb_select" name="flex2rb[]" multiple="multiple">
+						<% @rb_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select> 
+			    <select class="selectFullWidth flex_select" id="flex2wr_select" name="flex2wr[]" multiple="multiple">
+						<% @wr_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select>
+			    <select class="selectFullWidth flex_select" id="flex2te_select" name="flex2te[]" multiple="multiple">
+						<% @te_players.each do |player| %>
+			        <option value="<%= player.key %>"><%= player.name %></option>
+			      <% end %>
+			    </select> 
+			  </div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+		  <div class="pull-left">
+			  <h3>K</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="k_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="k_select" name="ks[]" multiple="multiple">
 				<% @k_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
@@ -85,8 +195,14 @@
 		</div>
 
 		<div class="container-fluid">
-			<h3>Def</h3>
-			<select class="player_select select100" name="defs[]" multiple="multiple">
+		  <div class="pull-left">
+			  <h3>DEF</h3>
+		  </div>
+		  <div class="pull-right">
+			  <h3 class="text-right"><span id="def_count">0</span>/1</h3>
+		  </div>
+		  <div class="clearfix"></div>
+			<select class="selectFullWidth" id="def_select" name="defs[]" multiple="multiple">
 				<% @d_players.each do |player| %>
 	        <option value="<%= player.key %>"><%= player.name %></option>
 	      <% end %>
