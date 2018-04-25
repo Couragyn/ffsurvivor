@@ -21,6 +21,7 @@
 //= require dataTables/jquery.dataTables
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.validate
 //= require rails_sortable
 //= require select2-full
 //= require turbolinks
@@ -47,93 +48,29 @@ $( document ).on('turbolinks:load', function() {
 
 	//  Weekly Select  //
 
-	$('input:radio[name="flex1"]').change(function() {
-    if ($(this).val()=='rb') {
-      $('#flex1rb_select').attr('disabled', false);
-      $('#flex1wr_select').attr('disabled', true);
-      $('#flex1wr_select').val([]).trigger('change');
-      $('#flex1te_select').attr('disabled', true);
-      $('#flex1te_select').val([]).trigger('change');
-    } else if ($(this).val()=='wr') {
-      $('#flex1rb_select').attr('disabled', true);
-      $('#flex1rb_select').val([]).trigger('change');
-      $('#flex1wr_select').attr('disabled', false);
-      $('#flex1te_select').attr('disabled', true);
-      $('#flex1te_select').val([]).trigger('change');
-    } else if ($(this).val()=='te') {
-      $('#flex1rb_select').attr('disabled', true);
-      $('#flex1rb_select').val([]).trigger('change');
-      $('#flex1wr_select').attr('disabled', true);
-      $('#flex1wr_select').val([]).trigger('change');
-      $('#flex1te_select').attr('disabled', false);
-    }
-	});
-
-	$('input:radio[name="flex2"]').change(function() {
-    if ($(this).val()=='rb') {
-      $('#flex2rb_select').attr('disabled', false);
-      $('#flex2wr_select').attr('disabled', true);
-      $('#flex2wr_select').val([]).trigger('change');
-      $('#flex2te_select').attr('disabled', true);
-      $('#flex2te_select').val([]).trigger('change');
-    } else if ($(this).val()=='wr') {
-      $('#flex2rb_select').attr('disabled', true);
-      $('#flex2rb_select').val([]).trigger('change');
-      $('#flex2wr_select').attr('disabled', false);
-      $('#flex2te_select').attr('disabled', true);
-      $('#flex2te_select').val([]).trigger('change');
-    } else if ($(this).val()=='te') {
-      $('#flex2rb_select').attr('disabled', true);
-      $('#flex2rb_select').val([]).trigger('change');
-      $('#flex2wr_select').attr('disabled', true);
-      $('#flex2wr_select').val([]).trigger('change');
-      $('#flex2te_select').attr('disabled', false);
-    }
-	});
-
 	$( "#qb_select" ).select2({
 	  theme: "bootstrap",
 	  maximumSelectionLength: 1
 	});
 
-	$('#qb_select').on('select2:select select2:unselect', function() {
-	  $("#qb_count").text($(this).val().length);
-	});
-
 	$( "#rb_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 2
-	});
-
-	$('#rb_select').on('select2:select select2:unselect', function() {
-	  $("#rb_count").text($(this).val().length);
+	  maximumSelectionLength: 4
 	});
 
 	$( "#wr_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 3
-	});
-
-	$('#wr_select').on('select2:select select2:unselect', function() {
-	  $("#wr_count").text($(this).val().length);
+	  maximumSelectionLength: 5
 	});
 
 	$( "#te_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 1
-	});
-	
-	$('#te_select').on('select2:select select2:unselect', function() {
-	  $("#te_count").text($(this).val().length);
+	  maximumSelectionLength: 3
 	});
 
 	$( "#k_select" ).select2({
 	  theme: "bootstrap",
 	  maximumSelectionLength: 1
-	});
-	
-	$('#k_select').on('select2:select select2:unselect', function() {
-	  $("#k_count").text($(this).val().length);
 	});
 
 	$( "#def_select" ).select2({
@@ -141,69 +78,74 @@ $( document ).on('turbolinks:load', function() {
 	  maximumSelectionLength: 1
 	});
 
-	$('#def_select').on('select2:select select2:unselect', function() {
-	  $("#def_count").text($(this).val().length);
+
+	$('#qb_select, #rb_select, #wr_select, #te_select, #k_select, #def_select').on('change', function() {
+		var total = ($('#qb_select').val().length) + ($('#rb_select').val().length) + ($('#wr_select').val().length) + ($('#te_select').val().length) + ($('#k_select').val().length) + ($('#def_select').val().length)
+	  $("#total_count").text(total);
 	});
 
-	$( "#flex1rb_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
+	$('#weekly_form').validate({
+    rules: {
+      "qbs[]": {
+      	required: true,
+        minlength: 1,
+        maxlength: 1
+      },
+      "rbs[]": {
+      	required: true,
+        minlength: 2,
+        maxlength: 4
+      },
+      "wrs[]": {
+      	required: true,
+        minlength: 3,
+        maxlength: 5
+      },
+      "tes[]": {
+      	required: true,
+        minlength: 1,
+        maxlength: 3
+      },
+      "ks[]": {
+      	required: true,
+        minlength: 1,
+        maxlength: 1
+      },
+      "defs[]": {
+      	required: true,
+        minlength: 1,
+        maxlength: 1
+      },
+    },
+    messages: {
+      "qbs[]": {
+      	minlength: 'You must choose at least {0} players',
+      },
+      "rbs[]": {
+      	minlength: 'You must choose at least {0} players',
+      },
+      "wrs[]": {
+      	minlength: 'You must choose at least {0} players',
+      },
+      "tes[]": {
+      	minlength: 'You must choose at least {0} players',
+      },
+      "ks[]": {
+      	minlength: 'You must choose at least {0} players',
+      },
+      "defs[]": {
+      	minlength: 'You must choose at least {0} players',
+      }
+    },
+    submitHandler: function(form){
+      var total = ($('#qb_select').val().length) + ($('#rb_select').val().length) + ($('#wr_select').val().length) + ($('#te_select').val().length) + ($('#k_select').val().length) + ($('#def_select').val().length)
+      console.log(total);
+      if (total != 11) {
+        $("div.error").html("You must select 11 players")
+        return false;
+      } else form.submit();
+    }
 	});
 
-	$('#flex1rb_select').on('change', function() {
-	  $("#flex1_count").text($(this).val().length);
-	});
-
-	$( "#flex1wr_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
-	});
-
-	$('#flex1wr_select').on('change', function() {
-	  $("#flex1_count").text($(this).val().length);
-	});
-
-	$( "#flex1te_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
-	});
-
-	$('#flex1te_select').on('change', function() {
-	  $("#flex1_count").text($(this).val().length);
-	});
-
-	$( "#flex2rb_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
-	});
-
-	$('#flex2rb_select').on('change', function() {
-	  $("#flex2_count").text($(this).val().length);
-	});
-
-	$( "#flex2wr_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
-	});
-
-	$('#flex2wr_select').on('change', function() {
-	  $("#flex2_count").text($(this).val().length);
-	});
-
-
-	$( "#flex2te_select" ).select2({
-	  theme: "bootstrap",
-	  maximumSelectionLength: 1,
-	  disabled: true
-	});
-
-	$('#flex2te_select').on('change', function() {
-	  $("#flex2_count").text($(this).val().length);
-	});
 
 });
