@@ -91,8 +91,4 @@ class LeaguesController < ApplicationController
 		render 'weekly'
 	end
 
-	def set_weekly
-
-	end
-
 end

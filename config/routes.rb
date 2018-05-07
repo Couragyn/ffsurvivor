@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 	post '/login' => 'sessions#create'
 	get '/logout' => 'sessions#destroy'
 
+	resources :weeks
+
 	resources :leagues
 
 	get '/leagues/:league_id/join' => 'leagues#new_join'
@@ -20,7 +22,7 @@ Rails.application.routes.draw do
 
 
 	get '/leagues/:league_id/team/:team_id/weekly/:week_id' => 'leagues#weekly', as: :weekly
-	post '/leagues/:league_id/team/:team_id/weekly/:week_id' => 'leagues#weekly', as: :set_weekly
+	post '/leagues/:league_id/team/:team_id/weekly/:week_id' => 'weeks#set_weekly', as: :set_weekly
 
   post '/teams/:team_id' => 'teams#destroy'
 

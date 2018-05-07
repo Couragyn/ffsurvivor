@@ -1,6 +1,8 @@
 Instructions for adding nfl DB
 https://github.com/BurntSushi/nfldb
 ============
+delete this stuff from schema
+
 bundle exec rails db < ./db/import/nfldb.sql
 
 #in ffsurvivor_development
