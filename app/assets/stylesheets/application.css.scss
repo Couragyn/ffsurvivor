@@ -44,18 +44,14 @@ table.display tbody td {
 	margin: 2px;
 }
 
-.selectFullWidth {
-	width: 100%;
-}
-
 .select80Width {
 	width: 80%;
 }
 
 div.error {
-    color: red;
-    font-size: 20px;
-    display: block;
+  color: red;
+  font-size: 20px;
+  display: block;
 }
 
 .divPadding {
@@ -64,4 +60,13 @@ div.error {
 
 .noMargin {
 	margin: 0px;
+}
+
+.disabled {
+  pointer-events:none;
+  opacity:0.6;
+}
+
+.locked-tag .select2-selection__choice__remove{
+  display: none!important;
 }

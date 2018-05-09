@@ -81,13 +81,32 @@ class LeaguesController < ApplicationController
 
 	def weekly
 		@current_week = League.current_week
+  	if params[:week_id].to_i > @current_week || params[:week_id].to_i < 1
+			params[:week_id] = @current_week
+		end
+
+		this_team = params[:team_id]
 		@this_week = params[:week_id]
+
 		@qb_players = Qb.order(:sort).all
     @rb_players = Rb.order(:sort).all
     @wr_players = Wr.order(:sort).all
     @te_players = Te.order(:sort).all
     @k_players = K.order(:sort).all
     @d_players = Def.order(:sort).all
+
+    @selected_keys = []
+    selected = Week.select('player').where(number: @this_week, team_id: this_team)
+    selected.each do |this_selected|
+    	@selected_keys.push(this_selected.player)
+  	end
+
+    @all_selected_keys = []
+    @all_selected = Week.where(team_id: this_team).where.not(number: @current_week)
+    @all_selected.each do |this_selected|
+    	@all_selected_keys.push(this_selected.player)
+  	end
+
 		render 'weekly'
 	end
 

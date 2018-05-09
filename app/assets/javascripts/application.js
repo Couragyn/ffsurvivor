@@ -30,6 +30,8 @@
 $( document ).on('turbolinks:load', function() {
   var clipboard = new Clipboard('.clipboard-btn');
 
+  calcTotal();
+
 	$('#allLeaguesDataTable').DataTable();
 
 	$(function() {
@@ -48,41 +50,186 @@ $( document ).on('turbolinks:load', function() {
 
 	//  Weekly Select  //
 
+  // $('#qb_select').select2({
+  //    tags: true,
+  //    placeholder: 'Select an option',
+  //    templateSelection : function (tag, container){
+  //       // here we are finding option element of tag and
+  //       // if it has property 'locked' we will add class 'locked-tag' 
+  //       // to be able to style element in select
+  //       var $option = $('#qb_select option[value="'+tag.id+'"]');
+  //       if ($option.attr('locked')){
+  //          $(container).addClass('locked-tag');
+  //          tag.locked = true; 
+  //       }
+  //       return tag.text;
+  //    },
+  //  })
+  //  .on('select2:unselecting', function(e){
+  //     // before removing tag we check option element of tag and 
+  //     // if it has property 'locked' we will create error to prevent all select2 functionality
+  //      if ($(e.params.args.data.element).attr('locked')) {
+  //          e.select2.pleaseStop();
+  //       }
+  //    });
+
 	$( "#qb_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 1
-	});
+	  maximumSelectionLength: 1,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#qb_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
+     });
 
 	$( "#rb_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 4
+	  maximumSelectionLength: 4,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#rb_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
 	});
 
 	$( "#wr_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 5
+	  maximumSelectionLength: 5,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#wr_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
 	});
 
 	$( "#te_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 3
+	  maximumSelectionLength: 3,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#te_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
 	});
 
 	$( "#k_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 1
+	  maximumSelectionLength: 1,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#k_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
 	});
 
 	$( "#def_select" ).select2({
 	  theme: "bootstrap",
-	  maximumSelectionLength: 1
+	  maximumSelectionLength: 1,
+    dropdownAutoWidth : true,
+    width: 'auto',
+     templateSelection : function (tag, container){
+        // here we are finding option element of tag and
+        // if it has property 'locked' we will add class 'locked-tag' 
+        // to be able to style element in select
+        var $option = $('#def_select option[value="'+tag.id+'"]');
+        if ($option.attr('locked')){
+           $(container).addClass('locked-tag');
+           tag.locked = true; 
+        }
+        return tag.text;
+     },
+   })
+   .on('select2:unselecting', function(e){
+      // before removing tag we check option element of tag and 
+      // if it has property 'locked' we will create error to prevent all select2 functionality
+       if ($(e.params.args.data.element).attr('locked')) {
+           e.select2.pleaseStop();
+        }
 	});
 
 
-	$('#qb_select, #rb_select, #wr_select, #te_select, #k_select, #def_select').on('change', function() {
+	$('#qb_select, #rb_select, #wr_select, #te_select, #k_select, #def_select').on('change', calcTotal);
+
+  function calcTotal() {
 		var total = ($('#qb_select').val().length) + ($('#rb_select').val().length) + ($('#wr_select').val().length) + ($('#te_select').val().length) + ($('#k_select').val().length) + ($('#def_select').val().length)
 	  $("#total_count").text(total);
-	});
+	};
 
 	$('#weekly_form').validate({
     rules: {

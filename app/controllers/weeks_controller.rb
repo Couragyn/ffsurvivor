@@ -4,6 +4,7 @@ class WeeksController < ApplicationController
 
 	def set_weekly
 		this_week = params[:week_id].to_i
+		puts this_week
 		this_team = params[:team_id].to_i
 
 		Week.where(number: this_week, team_id: this_team).destroy_all

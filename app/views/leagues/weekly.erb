@@ -20,15 +20,15 @@
 			  <ul class="dropdown-menu">
 			  	<% total_weeks = Array(1 .. 17) %>
 			  	<% total_weeks.each do |week| %>
-			  		<% if week === @current_week %>
-				    	<li><%= link_to "Week "+week.to_s+" - Current", weekly_path(:week_id => week) %></li>
+			  		<% if week > @current_week %>
+				    	<li class="disabled"><%= link_to "Week "+week.to_s, weekly_path(:week_id => week) %></li>
 				    <% else %>
 				    	<li><%= link_to "Week "+week.to_s, weekly_path(:week_id => week) %></li>
 				    <% end %>
 				  <% end %>
 			  </ul>
 			</li>
-			<% if @this_week != 17.to_s %>
+			<% if @this_week.to_i < @current_week %>
 				<li class="weekNav">
 					<%= link_to weekly_path(:week_id => (@this_week.to_i + 1)), class: "btn btn-primary" do %>
 				    Next <i class="glyphicon glyphicon-menu-right"></i>
@@ -37,6 +37,7 @@
 			<% end %>
 		</ul>
 	</div>
+
 	<form method="post" id="weekly_form">
 		<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 		<div class="container-fluid">
@@ -47,9 +48,18 @@
 			  <h3 class="text-right">Select 1</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="qb_select" name="qbs[]" multiple="multiple">
+			<select id="qb_select" name="qbs[]" multiple="multiple">
 				<% @qb_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+<!-- 					   <option value="<%= player.key %>" selected="selected" locked='locked'>name</option>  -->					   
+						<option value="<%= player.key %>" selected="selected"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>						
+					<% end %>
 	      <% end %>
 	    </select>
 		</div>
@@ -62,9 +72,17 @@
 			  <h3 class="text-right">Select 2 - 4</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="rb_select" name="rbs[]" multiple="multiple">
+			<select id="rb_select" name="rbs[]" multiple="multiple">
 				<% @rb_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+					   <option value="<%= player.key %>" selected="selected"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>	
+					<% end %>
 	      <% end %>
 	    </select>
 		</div>
@@ -77,9 +95,17 @@
 			  <h3 class="text-right">Select 3 - 5</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="wr_select" name="wrs[]" multiple="multiple">
+			<select id="wr_select" name="wrs[]" multiple="multiple">
 				<% @wr_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+					   <option value="<%= player.key %>" selected="selected"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>	
+					<% end %>
 	      <% end %>
 	    </select>  
 		</div>
@@ -92,9 +118,17 @@
 			  <h3 class="text-right">Select 1 - 3</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="te_select" name="tes[]" multiple="multiple">
+			<select id="te_select" name="tes[]" multiple="multiple">
 				<% @te_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+					   <option value="<%= player.key %>" selected="selected"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>	
+					<% end %>
 	      <% end %>
 	    </select>
 		</div>
@@ -107,9 +141,17 @@
 			  <h3 class="text-right">Select 1</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="k_select" name="ks[]" multiple="multiple">
+			<select id="k_select" name="ks[]" multiple="multiple">
 				<% @k_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+					   <option value="<%= player.key %>" selected="selected"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>	
+					<% end %>
 	      <% end %>
 	    </select>
 		</div>
@@ -122,9 +164,17 @@
 			  <h3 class="text-right">Select 1</h3>
 		  </div>
 		  <div class="clearfix"></div>
-			<select class="selectFullWidth" id="def_select" name="defs[]" multiple="multiple">
+			<select id="def_select" name="defs[]" multiple="multiple">
 				<% @d_players.each do |player| %>
-	        <option value="<%= player.key %>"><%= player.name %></option>
+					<% if @selected_keys.include?(player.key) %>
+					   <option value="<%= player.key %>" selected="selected" locked="locked"><%= player.name %></option>
+					<% else %>
+						<% if @all_selected_keys.include?(player.key) %>
+						   <option value="<%= player.key %>" disabled="disabled"><%= player.name %></option>
+						<% else %>W
+							<option value="<%= player.key %>"><%= player.name %></option>
+						<% end %>	
+					<% end %>
 	      <% end %>
 	    </select>  
 		</div>
@@ -142,4 +192,72 @@
 			</div>
 		</div>
 	</form>
+	<h2>Players Selected</h2>
+<div class="row">
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>QB</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'qb' %>
+						<% full_player = @qb_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>RB</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'rb' %>
+						<% full_player = @rb_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>WR</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'wr' %>
+						<% full_player = @wr_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>TE</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'te' %>
+						<% full_player = @te_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>K</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'k' %>
+						<% full_player = @k_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
+  <div class="table-responsive col-md-2">
+      <table>
+      	<thread><th>DEF</th></thread>
+    		<% @all_selected.each do |player| %>
+					<% if player.position === 'def' %>
+						<% full_player = @d_players.find {|s| s.key == player.player } %>
+      			<tr><td><%= full_player.name %></td></tr>
+      		<% end %>
+    		<% end %>
+      </table>
+  </div>
 </div>

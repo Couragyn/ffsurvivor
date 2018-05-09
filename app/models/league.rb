@@ -9,6 +9,6 @@ class League < ApplicationRecord
 	end
 
 	def self.current_week
-	  1
+	  3
 	end
 end
